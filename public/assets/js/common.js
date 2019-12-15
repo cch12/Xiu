@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-12 14:44:57
- * @LastEditTime: 2019-12-12 15:26:28
+ * @LastEditTime: 2019-12-14 16:10:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \12-alibaixiu\alibaixiu\public\assets\js\common.js
@@ -21,3 +21,14 @@ $('#logout').on('click',function () {
     });        
     }
 })
+function del(url, id) {
+    if (confirm('你确定要删除吗')) {
+        $.ajax({
+            type: "delete",
+            url: url + id,
+            success: function (response) {
+                location.reload()
+            }
+        });
+    }
+}

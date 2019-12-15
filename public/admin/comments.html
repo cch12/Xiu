@@ -25,12 +25,9 @@
         <h1>所有评论</h1>
       </div>
       <div class="page-action">
-        <ul class="pagination pagination-sm pull-right">
-          <li><a href="#">上一页</a></li>
-          <li><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">下一页</a></li>
+        <ul class="pagination pagination-sm pull-right" id="pageBox">
+          <!-- 分页模板拼接处 -->
+
         </ul>
       </div>
       <table class="table table-striped table-bordered table-hover">
@@ -44,40 +41,9 @@
             <th class="text-center" width="100">操作</th>
           </tr>
         </thead>
-        <tbody>
-          <tr class="danger">
-            <td>大大</td>
-            <td>楼主好人，顶一个</td>
-            <td>《Hello world》</td>
-            <td>2026/10/07</td>
-            <td>未批准</td>
-            <td class="text-center">
-              <a href="post-add.html" class="btn btn-info btn-xs">批准</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
-          <tr>
-            <td>大大</td>
-            <td>楼主好人，顶一个</td>
-            <td>《Hello world》</td>
-            <td>2026/10/07</td>
-            <td>已批准</td>
-            <td class="text-center">
-              <a href="post-add.html" class="btn btn-warning btn-xs">驳回</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
-          <tr>
-            <td>大大</td>
-            <td>楼主好人，顶一个</td>
-            <td>《Hello world》</td>
-            <td>2026/10/07</td>
-            <td>已批准</td>
-            <td class="text-center">
-              <a href="post-add.html" class="btn btn-warning btn-xs">驳回</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
+        <tbody id="commentsBox">
+         <!-- 评论模板拼接处 -->
+          
         </tbody>
       </table>
     </div>
@@ -122,6 +88,32 @@
 
   <script src="../assets/vendors/jquery/jquery.js"></script>
   <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendors/art-template/template-web.js"></script>
   <script>NProgress.done()</script>
+  <!-- 评论模板 -->
+  <script type="text/html" id="commentsTpl">
+    {{each records v}}
+    <tr>
+      <td>{{v.author.nickName}}</td>
+      <td>{{v.content}}</td>
+      <td>{{v.post.title}}</td>
+      <td>{{v.createAt.substr('T')[0]}}</td>
+      <td>{{v.state==0?'未审核':'已批准'}}</td>
+      <td class="text-center">
+        <a href="post-add.html" class="btn btn-info btn-xs">批准</a>
+        <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+      </td>
+    </tr>
+    {{/each}}
+  </script>
+  <!-- 分页模板 -->
+  <script type="text/html" id="pageTpl">
+    <li><a href="javascript:;" onclick="{{v}}">上一页</a></li>
+    {{each display v}}
+      <li><a href="javascript:;" onclick="{{v}}">{{v}}</a></li>
+    {{/each}}
+      <li><a href="javascript:;" onclick="{{v}}">下一页</a></li>
+  </script>
+  <script src="../assets/js/comments.js"></script>
 </body>
 </html>

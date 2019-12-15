@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="utf-8">
   <title>Categories &laquo; Admin</title>
@@ -9,6 +10,7 @@
   <link rel="stylesheet" href="../assets/css/admin.css">
   <script src="../assets/vendors/nprogress/nprogress.js"></script>
 </head>
+
 <body>
   <script>NProgress.start()</script>
 
@@ -29,16 +31,16 @@
         <strong>错误！</strong>发生XXX错误
       </div> -->
       <div class="row">
-        <div class="col-md-4">
-          <form>
+        <div class="col-md-4" id="formBox">
+          <form id="addCategory">
             <h2>添加分类</h2>
             <div class="form-group">
               <label>名称</label>
-              <input class="form-control" type="text" placeholder="请输入分类名称">
+              <input class="form-control" type="text" name="title" placeholder="请输入分类名称">
             </div>
             <div class="form-group">
               <label>图标</label>
-              <input class="form-control" type="text" placeholder="请输入分类图标类名">
+              <input class="form-control" type="text" name="className" placeholder="请输入分类图标类名">
             </div>
             <div class="form-group">
               <button class="btn btn-primary" type="submit">添加</button>
@@ -54,34 +56,14 @@
               <tr>
                 <th class="text-center" width="40"><input type="checkbox"></th>
                 <th>名称</th>
+                <th>图标</th>
+                <th>创建时间</th>
                 <th class="text-center" width="100">操作</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td>奇趣事</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td>潮科技</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td>奇趣事</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
+            <tbody id="categoryBox">
+              <!-- 文章分类模板拼接处 -->
+
             </tbody>
           </table>
         </div>
@@ -125,8 +107,45 @@
       </li>
     </ul>
   </div>
+  <!-- 文章列表模板 -->
+  <script type="text/html" id="categoryListTpl">
+    {{each data v}}
+    <tr>
+      <td class="text-center"><input type="checkbox"></td>
+      <td>{{v.title}}</td>
+      <td>{{v.className}}</td>
+      <td>{{$imports.formateDate(v.createAt)}}</td>
+      <td class="text-center">
+        <a href="javascript:;" class="btn btn-info btn-xs edit" data-id="{{v._id}}">编辑</a>
+        <a href="javascript:;" class="btn btn-danger btn-xs delete" data-id="{{v._id}}">删除</a>
+      </td>
+    </tr>
+    {{/each}}
+  </script>
+  <!-- 文章修改模板 -->
+  <script type="text/html" id="modifyCategoryTpl">
+    <form id="modifyCategory" data-id="{{_id}}">
+      <h2>修改分类</h2>
+      <div class="form-group">
+        <label>名称</label>
+        <input class="form-control" type="text" name="title" placeholder="请输入分类名称" value="{{title}}">
+      </div>
+      <div class="form-group">
+        <label>图标</label>
+        <input class="form-control" type="text" name="className" placeholder="请输入分类图标类名" value="{{className}}">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit">修改</button>
+      </div>
+    </form>
+  </script>
+
   <script src="../assets/vendors/jquery/jquery.js"></script>
   <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendors/art-template/template-web.js"></script>
+  <script src="../assets/js/common.js"></script>
   <script>NProgress.done()</script>
+  <script src="../assets/js/category.js"></script>
 </body>
+
 </html>
